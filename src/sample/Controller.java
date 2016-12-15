@@ -30,9 +30,7 @@ public class Controller implements Initializable {
     private List<Label> taskLabelList = new ArrayList<>();
     private List<CheckBox> taskCheckBoxList = new ArrayList<>();
     private List<Long> timeLeftList = new ArrayList<>();
-    private List<Thread> threads = new ArrayList<>();
     private int currentTaskNumber = 0;
-    private int newElementNumber = 0;
     private static boolean clockIsOn = false;
     private boolean autoSelect = true;
     private static long timeLeft = 0;
