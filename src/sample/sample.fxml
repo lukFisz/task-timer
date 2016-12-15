@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<Pane xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+   <children>
+      <Pane fx:id="about" blendMode="DIFFERENCE" layoutX="112.0" layoutY="23.0" prefHeight="331.0" prefWidth="398.0" visible="false" />
+      <VBox prefHeight="374.0" prefWidth="624.0">
+         <children>
+            <MenuBar>
+               <menus>
+                  <Menu mnemonicParsing="false" text="File">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Close" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Edit">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="Delete" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Help">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+            <HBox prefHeight="345.0" prefWidth="669.0">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefHeight="297.0" prefWidth="292.0">
+                     <children>
+                        <TextArea fx:id="newTaskFXML" prefHeight="71.0" prefWidth="257.0" wrapText="true">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </TextArea>
+                        <Button alignment="CENTER" mnemonicParsing="false" onAction="#addTask" prefHeight="36.0" prefWidth="206.0" text="Add new task">
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
+                        </Button>
+                        <Separator prefHeight="34.0" prefWidth="260.0" />
+                        <Label alignment="CENTER" prefHeight="29.0" prefWidth="256.0" text="Current task:">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <Label fx:id="currentTaskFXML" alignment="CENTER" prefHeight="70.0" prefWidth="260.0" wrapText="true">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                           <font>
+                              <Font name="System Bold" size="13.0" />
+                           </font>
+                        </Label>
+                        <HBox alignment="CENTER" prefHeight="70.0" prefWidth="270.0" spacing="30.0">
+                           <children>
+                              <Button fx:id="startStopButtonFXML" alignment="CENTER" mnemonicParsing="false" onAction="#startStop" prefHeight="36.0" prefWidth="206.0" text="Start" textAlignment="CENTER" />
+                           </children>
+                        </HBox>
+                     </children>
+                     <padding>
+                        <Insets left="5.0" right="5.0" />
+                     </padding>
+                     <HBox.margin>
+                        <Insets left="5.0" />
+                     </HBox.margin>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="324.0" spacing="10.0">
+                     <children>
+                        <ListView fx:id="taskListViewFXML" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="325.0" prefWidth="336.0">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </ListView>
+                        <Button fx:id="chooseTaskButtonFXML" mnemonicParsing="false" onAction="#chooseTask" text="Choose current task">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Button>
+                     </children>
+                     <HBox.margin>
+                        <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
+                     </HBox.margin>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </children>
+</Pane>
+
