@@ -6,6 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.io.FileNotFoundException;
+
 public class Main extends Application {
 
     @Override
@@ -13,9 +15,15 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Task TIMER");
         primaryStage.setScene(new Scene(root));
+        primaryStage.setOnCloseRequest(event -> {
+            try {
+                Controller.saveTaskOnClose();
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+        });
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);

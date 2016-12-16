@@ -27,7 +27,7 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Edit">
                      <items>
-                        <MenuItem mnemonicParsing="false" text="Delete" />
+                        <MenuItem mnemonicParsing="false" onAction="#clear" text="Clear tasks" />
                      </items>
                   </Menu>
                   <Menu mnemonicParsing="false" text="Help">
@@ -85,11 +85,7 @@
                               <Insets />
                            </VBox.margin>
                         </ListView>
-                        <Button fx:id="chooseTaskButtonFXML" mnemonicParsing="false" onAction="#chooseTask" text="Choose current task">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Button>
+                        <Button fx:id="chooseTaskButtonFXML" mnemonicParsing="false" onAction="#chooseTask" text="Choose current task" />
                      </children>
                      <HBox.margin>
                         <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />
