@@ -87,7 +87,6 @@ public class Controller implements Initializable {
                         this.taskLabelList.get(elementNumber));
                 this.taskHBoxList.add(hBox);
 
-                this.taskListViewFXML.setItems(FXCollections.observableArrayList(this.taskHBoxList));
 
                 this.timeLeftList.add(Long.parseLong(in.nextLine()));
 
@@ -98,11 +97,8 @@ public class Controller implements Initializable {
                 }else {
                     newTask.setTextFill(Color.DIMGRAY);
                 }
-
-                if (!this.clockIsOn && this.autoSelect) {
-                    changeCurrentTask();
-                }
-                this.newTaskFXML.setText("");
+                changeCurrentTask();
+                this.taskListViewFXML.setItems(FXCollections.observableArrayList(this.taskHBoxList));
             }
         } catch (FileNotFoundException e) {
             System.out.println("file not found");
@@ -111,20 +107,22 @@ public class Controller implements Initializable {
     }
 
     public static void saveTaskOnClose() throws FileNotFoundException {
-        PrintWriter write = new PrintWriter("lastTasks.txt");
-        for (int i=0; i<taskLabelList.size(); i++){
-            if (taskCheckBoxList.get(i).isSelected()) {
-                write.println("true");
-            } else {
-                write.println("false");
+        if (taskLabelList.size()>0) {
+            PrintWriter write = new PrintWriter("lastTasks.txt");
+            for (int i = 0; i < taskLabelList.size(); i++) {
+                if (taskCheckBoxList.get(i).isSelected()) {
+                    write.println("true");
+                } else {
+                    write.println("false");
+                }
+                taskLabelList.get(i).setText(taskLabelList.get(i).getText() + "  (");
+                write.println(taskLabelList.get(i)
+                        .getText()
+                        .substring(0, taskLabelList.get(i).getText().indexOf("  (")));
+                write.println(timeLeftList.get(i));
             }
-            taskLabelList.get(i).setText(taskLabelList.get(i).getText()+"  (");
-            write.println(taskLabelList.get(i)
-                    .getText()
-                    .substring(0, taskLabelList.get(i).getText().indexOf("  (")));
-            write.println(timeLeftList.get(i));
+            write.close();
         }
-        write.close();
     }
 
     public void addTask() {
