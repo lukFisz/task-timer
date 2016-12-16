@@ -14,9 +14,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<Pane xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
+<Pane prefHeight="374.0" prefWidth="636.0" xmlns="http://javafx.com/javafx/8.0.76-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
    <children>
-      <VBox prefHeight="374.0" prefWidth="624.0">
+      <VBox prefHeight="374.0" prefWidth="636.0">
          <children>
             <MenuBar>
                <menus>
@@ -37,7 +37,7 @@
                   </Menu>
                </menus>
             </MenuBar>
-            <HBox prefHeight="345.0" prefWidth="669.0">
+            <HBox prefHeight="345.0" prefWidth="764.0">
                <children>
                   <VBox alignment="TOP_CENTER" prefHeight="297.0" prefWidth="292.0">
                      <children>
@@ -78,14 +78,20 @@
                         <Insets left="5.0" />
                      </HBox.margin>
                   </VBox>
-                  <VBox alignment="TOP_CENTER" prefHeight="400.0" prefWidth="324.0" spacing="10.0">
+                  <VBox alignment="TOP_CENTER" prefHeight="325.0" prefWidth="338.0" spacing="10.0">
                      <children>
                         <ListView fx:id="taskListViewFXML" editable="true" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="325.0" prefWidth="336.0">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </ListView>
-                        <Button fx:id="chooseTaskButtonFXML" mnemonicParsing="false" onAction="#chooseTask" text="Choose current task" />
+                        <HBox alignment="CENTER" spacing="7.0">
+                           <children>
+                              <Button mnemonicParsing="false" onAction="#moveUp" text="Move up" />
+                              <Button mnemonicParsing="false" onAction="#moveDown" text="Move down" />
+                              <Button fx:id="chooseTaskButtonFXML" mnemonicParsing="false" onAction="#chooseTask" text="Choose current task" />
+                           </children>
+                        </HBox>
                      </children>
                      <HBox.margin>
                         <Insets bottom="10.0" left="5.0" right="10.0" top="10.0" />

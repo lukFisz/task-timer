@@ -33,20 +33,19 @@ public class Controller implements Initializable {
     private boolean clockIsOn = false;
     private boolean autoSelect = true;
     private long timeLeft = 0;
-    private static Scanner in = null;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        newTaskFXML.setOnKeyReleased(event -> {
+        this.newTaskFXML.setOnKeyReleased(event -> {
             if (event.getCode().equals(KeyCode.ENTER)){
-                String s = newTaskFXML.getText();
-                newTaskFXML.setText(s.substring(0, s.length()-1));
+                String s = this.newTaskFXML.getText();
+                this.newTaskFXML.setText(s.substring(0, s.length()-1));
                 addTask();
             }
         });
         /** read last tasks if exists */
         try {
-            in = new Scanner(new File("lastTasks.txt"));
+            Scanner in = new Scanner(new File("lastTasks.txt"));
             while (in.hasNext()) {
                 CheckBox checkBox = new CheckBox();
                 checkBox.selectedProperty()
@@ -62,8 +61,8 @@ public class Controller implements Initializable {
                                 this.taskLabelList
                                         .get(index)
                                         .setTextFill(Color.GREEN);
-                                if (currentTaskNumber == index && !autoSelect) {
-                                    autoSelect = true;
+                                if (this.currentTaskNumber == index && !this.autoSelect) {
+                                    this.autoSelect = true;
                                 }
                             }
                             if (!this.clockIsOn && this.autoSelect) {
@@ -78,7 +77,7 @@ public class Controller implements Initializable {
                 newTask.setMaxWidth(260);
                 newTask.setWrapText(true);
 
-                int elementNumber = taskHBoxList.size();
+                int elementNumber = this.taskHBoxList.size();
 
                 this.taskLabelList.add(newTask);
 
@@ -144,8 +143,8 @@ public class Controller implements Initializable {
                             this.taskLabelList
                                     .get(index)
                                     .setTextFill(Color.GREEN);
-                            if (currentTaskNumber == index && !autoSelect) {
-                                autoSelect = true;
+                            if (this.currentTaskNumber == index && !this.autoSelect) {
+                                this.autoSelect = true;
                             }
                         }
                         if (!this.clockIsOn && this.autoSelect) {
@@ -154,7 +153,7 @@ public class Controller implements Initializable {
                     });
             this.taskCheckBoxList.add(checkBox);
 
-            int elementNumber = taskHBoxList.size();
+            int elementNumber = this.taskHBoxList.size();
 
             Label newTask = new Label(this.newTaskFXML.getText());
             newTask.setMaxWidth(260);
@@ -184,8 +183,8 @@ public class Controller implements Initializable {
     }
 
     public void startStop(ActionEvent actionEvent) throws InterruptedException {
-        taskListViewFXML.scrollTo(this.currentTaskNumber);
         if (!this.clockIsOn) {
+            taskListViewFXML.scrollTo(this.currentTaskNumber);
             this.startStopButtonFXML.setText("Stop");
             this.chooseTaskButtonFXML.setDisable(true);
             start();
@@ -194,6 +193,7 @@ public class Controller implements Initializable {
             this.chooseTaskButtonFXML.setDisable(false);
             this.autoSelect = true;
             stop();
+            taskListViewFXML.scrollTo(this.currentTaskNumber);
         }
     }
 
@@ -309,7 +309,7 @@ public class Controller implements Initializable {
                         .getText()+time);
     }
 
-    public void clear(ActionEvent actionEvent){
+    public void clear(ActionEvent actionEvent) {
         PrintWriter clear = null;
         try {
             clear = new PrintWriter("lastTasks.txt");
@@ -319,13 +319,51 @@ public class Controller implements Initializable {
         }
         clear.close();
 
-        while (taskHBoxList.size()-1 >= 0) {
-            taskLabelList.remove(taskHBoxList.size()-1);
-            taskCheckBoxList.remove(taskHBoxList.size()-1);
-            timeLeftList.remove(taskHBoxList.size()-1);
-            taskHBoxList.remove(taskHBoxList.size()-1);
+        while (this.taskHBoxList.size() - 1 >= 0) {
+            this.taskLabelList.remove(this.taskHBoxList.size() - 1);
+            this.taskCheckBoxList.remove(this.taskHBoxList.size() - 1);
+            this.timeLeftList.remove(this.taskHBoxList.size() - 1);
+            this.taskHBoxList.remove(this.taskHBoxList.size() - 1);
         }
+        this.taskListViewFXML.setItems(FXCollections.observableArrayList(this.taskHBoxList));
+    }
 
+    public void moveUp(ActionEvent actionEvent) {
+        int index = this.taskListViewFXML.getSelectionModel().getSelectedIndex();
+        if (index > 0)
+            moveElement(index, --index);
+    }
+
+    public void moveDown(ActionEvent actionEvent) {
+        int index = this.taskListViewFXML.getSelectionModel().getSelectedIndex();
+        if (index+1 != this.taskHBoxList.size())
+            moveElement(index, ++index);
+    }
+
+    public void moveElement(int index1, int index2){
+        HBox hBox = this.taskHBoxList.get(index1);
+        this.taskHBoxList.set(index1, this.taskHBoxList.get(index2));
+        this.taskHBoxList.set(index2, hBox);
+
+        Label label = this.taskLabelList.get(index1);
+        this.taskLabelList.set(index1, this.taskLabelList.get(index2));
+        this.taskLabelList.set(index2, label);
+
+        CheckBox checkBox = this.taskCheckBoxList.get(index1);
+        this.taskCheckBoxList.set(index1, this.taskCheckBoxList.get(index2));
+        this.taskCheckBoxList.set(index2, checkBox);
+
+        long t = this.timeLeftList.get(index1);
+        this.timeLeftList.set(index1, this.timeLeftList.get(index2));
+        this.timeLeftList.set(index2, t);
+
+        for (int i = 0; i < this.taskLabelList.size(); i++) {
+            if (this.taskLabelList.get(i).getTextFill().equals(Color.BLACK)||
+                    this.taskLabelList.get(i).getTextFill().equals(Color.CORAL)) {
+                this.currentTaskNumber = i;
+                break;
+            }
+        }
         this.taskListViewFXML.setItems(FXCollections.observableArrayList(this.taskHBoxList));
     }
 }
