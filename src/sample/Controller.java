@@ -44,9 +44,10 @@ public class Controller implements Initializable {
             }
         });
         /** read last tasks if exists */
+        Scanner file = null;
         try {
-            Scanner in = new Scanner(new File("lastTasks.txt"));
-            while (in.hasNext()) {
+            file = new Scanner(new File("lastTasks.txt"));
+            while (file.hasNext()) {
                 CheckBox checkBox = new CheckBox();
                 checkBox.selectedProperty()
                         .addListener((observable, oldValue, newValue) -> {
@@ -71,9 +72,9 @@ public class Controller implements Initializable {
                         });
                 this.taskCheckBoxList.add(checkBox);
 
-                String isSelected = in.nextLine();
+                String isSelected = file.nextLine();
 
-                Label newTask = new Label(in.nextLine());
+                Label newTask = new Label(file.nextLine());
                 newTask.setMaxWidth(260);
                 newTask.setWrapText(true);
 
@@ -87,7 +88,7 @@ public class Controller implements Initializable {
                         this.taskLabelList.get(elementNumber));
                 this.taskHBoxList.add(hBox);
 
-                this.timeLeftList.add(Long.parseLong(in.nextLine()));
+                this.timeLeftList.add(Long.parseLong(file.nextLine()));
 
                 if (isSelected.equals("true")){
                     newTask.setTextFill(Color.GREEN);
@@ -101,26 +102,28 @@ public class Controller implements Initializable {
             }
         } catch (FileNotFoundException e) {
             System.out.println("file not found");
+        }finally {
+            if (file != null)  file.close();
         }
         /**-------------------*/
     }
 
     public static void saveTaskOnClose() throws FileNotFoundException {
         if (taskLabelList.size()>0) {
-            PrintWriter write = new PrintWriter("lastTasks.txt");
+            PrintWriter file = new PrintWriter("lastTasks.txt");
             for (int i = 0; i < taskLabelList.size(); i++) {
                 if (taskCheckBoxList.get(i).isSelected()) {
-                    write.println("true");
+                    file.println("true");
                 } else {
-                    write.println("false");
+                    file.println("false");
                 }
                 taskLabelList.get(i).setText(taskLabelList.get(i).getText() + "  (");
-                write.println(taskLabelList.get(i)
+                file.println(taskLabelList.get(i)
                         .getText()
                         .substring(0, taskLabelList.get(i).getText().indexOf("  (")));
-                write.println(timeLeftList.get(i));
+                file.println(timeLeftList.get(i));
             }
-            write.close();
+            file.close();
         }
     }
 
@@ -307,15 +310,15 @@ public class Controller implements Initializable {
     }
 
     public void clear(ActionEvent actionEvent) {
-        PrintWriter clear = null;
+        PrintWriter file = null;
         try {
-            clear = new PrintWriter("lastTasks.txt");
-            clear.print("");
+            file = new PrintWriter("lastTasks.txt");
+            file.print("");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }finally {
-            if (clear != null)
-                clear.close();
+            if (file != null)
+                file.close();
             this.taskLabelList.clear();
             this.taskCheckBoxList.clear();
             this.timeLeftList.clear();
@@ -363,4 +366,6 @@ public class Controller implements Initializable {
         }
         this.taskListViewFXML.setItems(FXCollections.observableArrayList(this.taskHBoxList));
     }
+
+
 }
