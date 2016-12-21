@@ -87,7 +87,6 @@ public class Controller implements Initializable {
                         this.taskLabelList.get(elementNumber));
                 this.taskHBoxList.add(hBox);
 
-
                 this.timeLeftList.add(Long.parseLong(in.nextLine()));
 
                 if (isSelected.equals("true")){
@@ -314,16 +313,16 @@ public class Controller implements Initializable {
             clear.print("");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
-        }
-        clear.close();
+        }finally {
+            if (clear != null)
+                clear.close();
+            this.taskLabelList.clear();
+            this.taskCheckBoxList.clear();
+            this.timeLeftList.clear();
+            this.taskHBoxList.clear();
 
-        while (this.taskHBoxList.size() - 1 >= 0) {
-            this.taskLabelList.remove(this.taskHBoxList.size() - 1);
-            this.taskCheckBoxList.remove(this.taskHBoxList.size() - 1);
-            this.timeLeftList.remove(this.taskHBoxList.size() - 1);
-            this.taskHBoxList.remove(this.taskHBoxList.size() - 1);
+            this.taskListViewFXML.setItems(FXCollections.observableArrayList(this.taskHBoxList));
         }
-        this.taskListViewFXML.setItems(FXCollections.observableArrayList(this.taskHBoxList));
     }
 
     public void moveUp(ActionEvent actionEvent) {
