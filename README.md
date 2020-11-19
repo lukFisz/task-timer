@@ -1,5 +1,5 @@
-task timer
+# Task Timer
 
-simple app to manage tasks written in Java using JavaFX
+Simple app to manage tasks written in Java using JavaFX.
 
-run **timer.jar** from **out/production/task-timer**
+Run **timer.jar** from **out/production/task-timer**
